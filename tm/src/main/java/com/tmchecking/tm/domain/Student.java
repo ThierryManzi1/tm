@@ -1,7 +1,16 @@
 package com.tmchecking.tm.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Student {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	private String firstName;
@@ -11,6 +20,18 @@ public class Student {
 	private int studentId;
 	
 	private String email;
+	
+	@OneToOne
+	@JoinColumn(name = "user_credential",nullable = true)
+	private Credential userCredential;
+
+	public Credential getUserCredential() {
+		return userCredential;
+	}
+
+	public void setUserCredential(Credential userCredential) {
+		this.userCredential = userCredential;
+	}
 
 	public String getEmail() {
 		return email;
