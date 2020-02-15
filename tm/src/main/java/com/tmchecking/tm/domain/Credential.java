@@ -4,6 +4,9 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
@@ -17,8 +20,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity(name = "credentials_tbl")
 public class Credential implements UserDetails{
 	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long credentialId;
 	private String password;
-	
 	private String username;
 	
 	@OneToOne(cascade = CascadeType.ALL)

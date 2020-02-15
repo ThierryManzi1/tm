@@ -1,12 +1,11 @@
 package com.tmchecking.tm.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -15,7 +14,6 @@ import com.tmchecking.tm.service.impl.UserServiceImpl;
 
 
 @Configuration
-//@Order(SecurityProperties.BASIC_AUTH_ORDER - 10)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -43,11 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  			(anyRequest()) should always be at the bottom of the list.     
          */
            .authorizeRequests()
-                .antMatchers( "/login**" ).permitAll()
                 .antMatchers( "/uploadFile" ).hasRole( "ADMIN" )
                 .antMatchers( "/schedule" ).hasAnyRole( "USER" )
-                .antMatchers( "/managestudent" ).hasAnyRole( "ADMIN" )
-                .anyRequest().permitAll()
+                .antMatchers( "/managestudent" ).hasAnyRole( "ADMIN" )		
+				.antMatchers( "/login**" ).permitAll()
+				.antMatchers("/test-controller").permitAll()
+				.antMatchers("/").permitAll()
              .and()
             
 				/*
@@ -59,11 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				 * failureUrl: the URL to which the user will be redirected if  failed login
 				 */
              .formLogin()
-                .loginPage( "/login" )
-                .loginProcessingUrl( "/postlogin" )
-                .defaultSuccessUrl( "/schedule" )
-                .failureUrl( "/loginfailed" )
-                .permitAll()
+                // .loginPage( "/login" )
+                // .defaultSuccessUrl( "/schedule" )
+                // .failureUrl( "/loginfailed" )
+                // .permitAll()
                  .and()
  
 				/*
