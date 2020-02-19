@@ -21,6 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
+	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userServiceImpl).passwordEncoder(passwordEncoder());
@@ -59,8 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				 * failureUrl: the URL to which the user will be redirected if  failed login
 				 */
              .formLogin()
-                .loginPage( "/login" )
-                .loginProcessingUrl( "/postlogin" )
+              //  .loginPage( "/login" )
                 .defaultSuccessUrl( "/schedule" )
                 .failureUrl( "/loginfailed" )
                 .permitAll()
